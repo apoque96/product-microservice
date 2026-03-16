@@ -3,7 +3,6 @@ package com.delivery.products.controller;
 import com.delivery.products.dto.ProductCreateRequest;
 import com.delivery.products.dto.ProductResponse;
 import com.delivery.products.dto.ProductUpdateRequest;
-import com.delivery.products.entity.Product;
 import com.delivery.products.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -16,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/products")
