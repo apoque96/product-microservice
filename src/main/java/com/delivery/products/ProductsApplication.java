@@ -14,6 +14,7 @@ public class ProductsApplication {
 
     private final Environment env;
 
+    // Random comment gooooooo
 	public static void main(String[] args) {
 		SpringApplication.run(ProductsApplication.class, args);
 	}
