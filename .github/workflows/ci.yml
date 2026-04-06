@@ -8,6 +8,9 @@ on:
 
 jobs:
   build-and-test:
+    env:
+      SPRING_PROFILES_ACTIVE: test
+
     runs-on: ubuntu-latest
     
     steps:
