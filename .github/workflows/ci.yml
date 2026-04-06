@@ -51,7 +51,7 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: |
         mvn verify sonar:sonar \
-          -Dsonar.projectKey=apoque96_product_microservice \
+          -Dsonar.projectKey=apoque96_product-microservice \
           -Dsonar.organization=apoque96 \
           -Dsonar.host.url=https://sonarcloud.io \
           -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml \
