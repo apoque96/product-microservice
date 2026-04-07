@@ -18,8 +18,7 @@ public class ProductsApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ProductsApplication.class, args);
 	}
-
-    // Random comment gooooooo
+    
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
