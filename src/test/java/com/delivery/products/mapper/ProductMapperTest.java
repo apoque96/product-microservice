@@ -63,7 +63,7 @@ class ProductMapperTest {
         assertNotNull(result);
         assertNull(result.getId());
         assertNull(result.getName());
-        assertNull(result.getPrice());
+        assertNotNull(result.getPrice());
         assertNull(result.getDescription());
         assertNull(result.getCreatedAt());
         assertNull(result.getUpdatedAt());
