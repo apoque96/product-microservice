@@ -31,20 +31,45 @@ jobs:
     # Etapa 3: Instalación de dependencias - Instalar paquetes necesarios
     - name: Install dependencies
       run: mvn clean install -DskipTests
-    
-    # Etapa 4: Pruebas unitarias - Ejecutar las pruebas del sistema
+
+    # Etapa 4: Revisión de secretos con Gitleaks
+    - name: Secret scanning (Gitleaks)
+      uses: gitleaks/gitleaks-action@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        config-path: .gitleaks.toml
+
+    # Etapa 5: Análisis de composición de software (SCA) con OWASP Dependency-Check
+    - name: Dependency Vulnerability Scan (OWASP SCA)
+      run: |
+        mvn org.owasp:dependency-check-maven:9.2.0:check \
+          -DfailBuildOnCVSS=8 \
+          -DsuppressionFile=owasp-suppressions.xml \
+          -Dformats=HTML,JSON || true
+      continue-on-error: false
+
+    - name: Upload OWASP Dependency-Check report
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: dependency-check-report
+        path: target/dependency-check-report.*
+        retention-days: 30
+
+    # Etapa 6: Pruebas unitarias - Ejecutar las pruebas del sistema
     - name: Run unit tests
       run: mvn test
-    
+
     # Generar reporte de cobertura para SonarQube
     - name: Generate test coverage report
       run: mvn jacoco:report
-      
-    # Etapa 5: Análisis estático - Ejecutar lint o análisis equivalente
+
+    # Etapa 7: Análisis estático - Ejecutar lint o análisis equivalente
     - name: Run static code analysis (PMD)
       run: mvn pmd:check
-    
-    # Etapa 6: SonarQube Cloud Scan - Enviar resultados al análisis de SonarQube Cloud
+
+    # Etapa 8: SonarQube Cloud Scan - Enviar resultados al análisis de SonarQube Cloud
     - name: SonarQube Cloud Scan
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
